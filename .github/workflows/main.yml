@@ -27,15 +27,20 @@ jobs:
     - name: create env file
       run: |
         touch .env
-        echo MORALIS_APP_ID=${{ secrets.MORALIS_APP_ID }} >> .env
-        echo MORALIS_SERVER_URL=${{ secrets.MORALIS_SERVER_URL }} >> .env
-        echo INFURA_TOKEN=${{ secrets.INFURA_TOKEN }} >> .env
+        echo REACT_APP_MORALIS_APP_ID=${{ secrets.REACT_APP_MORALIS_APP_ID }} >> .env
+        echo REACT_APP_MORALIS_SERVER_URL=${{ secrets.REACT_APP_MORALIS_SERVER_URL }} >> .env
+        echo REACT_APP_INFURA_TOKEN=${{ secrets.REACT_APP_INFURA_TOKEN }} >> .env
 
     - name: Install dependencies
       run: yarn
 
     - name: Build
       run: yarn build
+      env:
+        REACT_APP_MORALIS_APP_ID: ${{ secrets.REACT_APP_MORALIS_APP_ID }}
+        REACT_APP_MORALIS_SERVER_URL: ${{ secrets.REACT_APP_MORALIS_SERVER_URL }}
+        REACT_APP_INFURA_TOKEN: ${{ secrets.REACT_APP_INFURA_TOKEN }}
+
 
     - name: Deploy
       run: |
