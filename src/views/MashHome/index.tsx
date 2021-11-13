@@ -1,29 +1,7 @@
 import React from 'react'
-import { useMoralis } from "react-moralis";
 import { Link } from 'react-router-dom'
 import { MashHomeMain } from '../../components/MashHomeMain';
-
-
-const MashConnect = () => {
-  const { authenticate, isAuthenticated, user } = useMoralis();
-
-  console.log(user)
-
-  if (!isAuthenticated) {
-    return (
-      <button
-        onClick={() => authenticate()}
-        className="mr-8 inline-flex items-center justify-center px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none"
-      >Connect wallet</button>
-    );
-  }
-
-  return (
-    <Link to="/about">
-      <h1 style={{ maxWidth: '156px', overflow: 'hidden' }} className="mr-8 inline-flex items-center">Welcome {user?.get("username")}</h1>
-    </Link>
-  );
-}
+import SignInWithCeramic from '../../components/SignInWithCeramic';
 
 const MashHome = () => {
   return (
@@ -43,10 +21,12 @@ const MashHome = () => {
           <ul>
             <li className="flex items-center">
               <Link
-                to="/"
+                to="/about"
                 className="text-indigo-600 mr-4 inline-flex items-center justify-center px-5 py-3 text-base font-medium leading-6 transition duration-150 ease-in-out border-2 border-indigo-500 hover:border-black hover:text-black rounded-md focus:outline-none"
               >Explore Mashups</Link>
-              <MashConnect />
+              <div className="mr-8">
+                <SignInWithCeramic />
+              </div>
             </li>
           </ul>
         </nav>
