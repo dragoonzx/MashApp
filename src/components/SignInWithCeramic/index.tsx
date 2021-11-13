@@ -2,32 +2,32 @@ import { useCeramic } from "use-ceramic";
 import { useEffect, useState } from "react";
 import MashProfileMenu from "../MashProfileMenu";
 
-function UsernameIDX() {
-  const ceramic = useCeramic();
-  const [name, setName] = useState("");
+// function UsernameIDX() {
+//   const ceramic = useCeramic();
+//   const [name, setName] = useState("");
 
-  useEffect(() => {
-    if (ceramic.isAuthenticated && !name) {
-      ceramic.idx
-        .get<{ name: string | undefined }>("basicProfile")
-        .then((profile) => {
-          if (profile && profile.name) {
-            setName(profile.name);
-          }
-        });
-    }
-  });
+//   useEffect(() => {
+//     if (ceramic.isAuthenticated && !name) {
+//       ceramic.idx
+//         .get<{ name: string | undefined }>("basicProfile")
+//         .then((profile) => {
+//           if (profile && profile.name) {
+//             setName(profile.name);
+//           }
+//         });
+//     }
+//   });
 
-  if (name) {
-    return (
-      <p>
-        Name from IDX: <code>{name}</code>
-      </p>
-    );
-  } else {
-    return <></>;
-  }
-}
+//   if (name) {
+//     return (
+//       <p>
+//         Name from IDX: <code>{name}</code>
+//       </p>
+//     );
+//   } else {
+//     return <></>;
+//   }
+// }
 
 function SignInWithCeramic() {
   const ceramic = useCeramic();
