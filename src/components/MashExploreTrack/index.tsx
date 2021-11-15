@@ -17,7 +17,7 @@ function MashExploreTrack({
   const isPlaying = trackState === "playing";
 
   return (
-    <div className="bg-gray-900 shadow-lg rounded p-3">
+    <div className="bg-white shadow-lg rounded p-3">
       <div className="group relative">
         <img
           className="w-full md:w-72 block rounded mx-auto"
@@ -85,8 +85,8 @@ function MashExploreTrack({
         </div>
       </div>
       <div className="p-5" style={{maxWidth: '280px'}}>
-        <h3 className="text-white text-lg truncate">{!currentTrack ? 'Epoch' : currentTrack.title}</h3>
-        <p className="text-gray-400">{!currentTrack ? 'Tycho' : currentTrack.genre}</p>
+        <h3 className="text-black text-lg truncate">{!currentTrack ? 'Epoch' : currentTrack.title}</h3>
+        <p className="text-gray-600">{!currentTrack ? 'Tycho' : currentTrack.genre}</p>
       </div>
     </div>
   );
