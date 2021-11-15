@@ -134,22 +134,15 @@ const MashAbout = () => {
           width="2040"
         ></canvas>
         <div className="absolute top-0 min-h-screen min-w-full bg-black bg-opacity-25"></div>
-        <audio
-          id="audio"
-          ref={audioRef}
-          src={track}
-          controls
-          className="absolute top-8 left-8"
-        ></audio>
         {/* Left: mashups list */}
         <Tab.Group>
-          <Tab.List className="absolute left-12 top-32 flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
+          <Tab.List className="absolute left-12 top-8 flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
             {Object.keys(categories).map((category) => (
               <Tab
                 key={category}
                 className={({ selected }) =>
                   classNames(
-                    "w-36 py-2.5 text-sm leading-5 font-medium rounded-lg",
+                    "w-36 py-2.5 text-sm leading-5 font-medium rounded",
                     "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60",
                     selected
                       ? "bg-white shadow text-indigo-600"
@@ -162,16 +155,17 @@ const MashAbout = () => {
             ))}
           </Tab.List>
           <Tab.Panels
-            className="absolute left-8 top-48"
+            className="absolute left-8 top-24"
             style={{ width: "334px" }}
           >
             {Object.values(categories).map((posts, idx) => (
               <Tab.Panel
                 key={idx}
                 className={classNames(
-                  "bg-white rounded-xl p-3 overflow-auto max-h-96",
+                  "bg-white rounded p-3 overflow-auto",
                   "focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60"
                 )}
+                style={{ maxHeight: 'calc(100vh - 128px)' }}
               >
                 {/* {idx === 0 ? <MashMashupsList /> : <div>kek</div>} */}
                 <ul>
@@ -233,8 +227,15 @@ const MashAbout = () => {
           <button onClick={nextTrackPlay} className="flex justify-center mx-auto mt-4">
             Next track
           </button>
+          <audio
+            id="audio"
+            ref={audioRef}
+            src={track}
+            controls
+            className="mt-4"
+          ></audio>
         </div>
-        {/* Right: profile connect &  */}
+        {/* Right: profile connect & track edit mode */}
         <div className="absolute right-8 top-8 left-auto">
           <SignInWithCeramic />
         </div>
