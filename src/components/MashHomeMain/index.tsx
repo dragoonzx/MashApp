@@ -65,7 +65,7 @@ export const MashHomeMain = () => {
                     <div className="flex mt-8 lg:flex-shrink-0 lg:mt-0">
                         <div className="inline-flex rounded-md shadow">
                             <Link
-                                to="/about"
+                                to="/explore"
                                 className="
                 inline-flex
                 items-center
