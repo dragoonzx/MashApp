@@ -1686,6 +1686,11 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+"@foobar404/wave@^1.2.7":
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/@foobar404/wave/-/wave-1.2.7.tgz#d17160c495f9fac9ba2139190349f4586b8882fc"
+  integrity sha512-ynWWvfP4Dw1dUe4IupRiJGrh0nSfiYtBnY2ZU4CzGYUMvT9LVWMmpSvDjptgkl5whcwNBjGhVM1Gq1b1J/Z3TA==
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"

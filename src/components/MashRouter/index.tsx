@@ -5,7 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import MashHome from "../../views/MashHome";
-import MashAbout from "../../views/MashAbout";
+import MashExplore from "../../views/MashExplore";
 
 export default function MashRouter() {
   return (
@@ -17,7 +17,7 @@ export default function MashRouter() {
           <Route path="/topics">
             <Topics />
           </Route> */}
-          <Route path="/about" element={<MashAbout />} />
+          <Route path="/explore" element={<MashExplore />} />
           <Route path="/" element={<MashHome/>} />
         </Routes>
     </Router>
