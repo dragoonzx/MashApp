@@ -2,8 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { MashHomeMain } from '../../components/MashHomeMain';
 import SignInWithCeramic from '../../components/SignInWithCeramic';
+import { useAudioEffects } from '../../hooks/useAudioEffects';
 
 const MashHome = () => {
+  const { playClick } = useAudioEffects()
+
   return (
     <div>
       <header className="flex justify-between items-center bg-white shadow">
@@ -21,6 +24,7 @@ const MashHome = () => {
           <ul>
             <li className="flex items-center">
               <Link
+                onClick={() => playClick()}
                 to="/explore"
                 className="text-indigo-600 mr-8 inline-flex items-center justify-center px-5 py-3 text-base font-medium leading-6 transition duration-150 ease-in-out border-2 border-indigo-500 hover:border-black hover:text-black rounded focus:outline-none"
               >Explore Mashups</Link>

@@ -1,6 +1,7 @@
 import { useCeramic } from "use-ceramic";
 import { useEffect, useState } from "react";
 import MashProfileMenu from "../MashProfileMenu";
+import { useAudioEffects } from "../../hooks/useAudioEffects";
 
 // function UsernameIDX() {
 //   const ceramic = useCeramic();
@@ -30,6 +31,8 @@ import MashProfileMenu from "../MashProfileMenu";
 // }
 
 function SignInWithCeramic() {
+  const { playClick } = useAudioEffects()
+
   const ceramic = useCeramic();
   const [authenticated, setAuthenticated] = useState(ceramic.isAuthenticated);
   const [progress, setProgress] = useState(false);
@@ -47,6 +50,7 @@ function SignInWithCeramic() {
   });
 
   const handleLogin = async () => {
+    playClick()
     setProgress(true);
     try {
       await ceramic.authenticate();

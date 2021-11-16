@@ -3,6 +3,7 @@ import { Tab } from "@headlessui/react";
 import { classNames } from "../../utils/classNames";
 import { durationTimeFormat } from "../../utils/durationTImeFormat";
 import { ITrack } from "../../types";
+import { useAudioEffects } from "../../hooks/useAudioEffects";
 
 interface IMashPlaylists {
   trendingTracks: any[];
@@ -15,6 +16,8 @@ function MashPlaylists({
   currentTrack,
   setTrackToPlay
 }: IMashPlaylists) {
+  const { playClick } = useAudioEffects()
+
   const [categories, setCategories] = useState<{
     Playlist: any[];
     Friends: any[];
@@ -24,7 +27,7 @@ function MashPlaylists({
   });
 
   return (
-    <Tab.Group>
+    <Tab.Group onChange={() => playClick()}>
       <Tab.List className="flex justify-center p-1 space-x-1 bg-blue-900/20 rounded-xl">
         {Object.keys(categories).map((category) => (
           <Tab
