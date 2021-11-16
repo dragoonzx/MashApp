@@ -5,6 +5,7 @@ interface IMashExploreTrack {
   currentTrack: ITrack | null;
   onTrackPlay: () => void;
   onTrackPause: () => void;
+  toggleMashupMode: (currentTrackId: string) => void;
   trackState: "playing" | "pause";
 }
 
@@ -12,6 +13,7 @@ function MashExploreTrack({
   currentTrack,
   onTrackPlay,
   onTrackPause,
+  toggleMashupMode,
   trackState,
 }: IMashExploreTrack) {
   const isPlaying = trackState === "playing";
@@ -70,16 +72,9 @@ function MashExploreTrack({
             )}
           </button>
 
-          <button className="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              className="bi bi-three-dots"
-              viewBox="0 0 16 16"
-            >
-              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+          <button onClick={() => toggleMashupMode(currentTrack?.id ?? '')} className="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
           </button>
         </div>
