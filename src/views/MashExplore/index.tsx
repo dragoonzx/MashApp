@@ -160,7 +160,7 @@ const MashAbout = () => {
             <SignInWithCeramic />
           </div>
         </div>
-        <div className="absolute right-8 top-48">
+        <div className="absolute right-8 top-24">
           <MashPlaylists
             trendingTracks={trendingTracks}
             currentTrack={currentTrack}
