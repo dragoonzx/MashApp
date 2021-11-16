@@ -10,7 +10,7 @@ import { ITrack } from "../../types";
 import MashupsList from "../../components/MashupsList";
 import MashPlaylists from "../../components/MashPlaylists";
 
-const MashAbout = () => {
+const MashAbout = () => {  
   const [wave] = useState(new Wave());
   const [playing, setPlaying] = useState(false);
 
