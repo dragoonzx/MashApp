@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/anchor-has-content */
 import { useState, useEffect, SyntheticEvent } from "react";
 import { Tab } from "@headlessui/react";
 import { classNames } from "../../utils/classNames";

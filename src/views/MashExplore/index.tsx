@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, SyntheticEvent } from "react";
 // import * as Tone from "tone";
 // @ts-expect-error: no typing
 import Wave from "@foobar404/wave";
-import { Switch } from '@headlessui/react'
 import SignInWithCeramic from "../../components/SignInWithCeramic";
 import MashExploreTrack from "../../components/MashExploreTrack";
 import { useAudius } from "../../hooks/useAudius";
@@ -10,8 +9,16 @@ import { ITrack } from "../../types";
 import MashupsList from "../../components/MashupsList";
 import MashPlaylists from "../../components/MashPlaylists";
 
-const MashAbout = () => {  
-  const [wave] = useState(new Wave());
+const MashAbout = () => {
+  useEffect(() => {
+    (new Wave()).fromElement("audio", "output", { type: "bars", stroke: 2 });
+
+    return () => {
+      // @ts-ignore
+      window.$wave.audio.source = null
+    }
+  }, []);
+
   const [playing, setPlaying] = useState(false);
 
   const { host, getTrendingTracks, getTrackSrc } = useAudius();
@@ -85,10 +92,6 @@ const MashAbout = () => {
   };
 
   const [currentTrack, setCurrentTrack] = useState<ITrack | null>(null);
-
-  useEffect(() => {
-    wave.fromElement("audio", "output", { type: "bars", stroke: 2 });
-  }, [wave]);
 
   const onTrackPlay = () => {
     setPlaying(true);
