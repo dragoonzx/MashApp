@@ -1,4 +1,6 @@
-import { useState, useEffect, SyntheticEvent } from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/anchor-has-content */
+import { useState, SyntheticEvent } from "react";
 import { Tab } from "@headlessui/react";
 import { classNames } from "../../utils/classNames";
 import { durationTimeFormat } from "../../utils/durationTImeFormat";
@@ -18,7 +20,7 @@ function MashPlaylists({
 }: IMashPlaylists) {
   const { playClick } = useAudioEffects()
 
-  const [categories, setCategories] = useState<{
+  const [categories] = useState<{
     Playlist: any[];
     Friends: any[];
   }>({

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { MashHomeMain } from '../../components/MashHomeMain';
-import SignInWithCeramic from '../../components/SignInWithCeramic';
 import { useAudioEffects } from '../../hooks/useAudioEffects';
 
 const MashHome = () => {
