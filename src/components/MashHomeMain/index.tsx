@@ -35,8 +35,7 @@ export const MashHomeMain = () => {
                                 A better way to consume music
                             </p>
                             <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                                Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
-                                magnam voluptatum cupiditate veritatis in accusamus quisquam.
+                                Listen & Create in one app
                             </p>
                         </div>
                     </div>
@@ -132,13 +131,11 @@ export const MashHomeMain = () => {
                                             </svg>
                                         </div>
                                         <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                                            Competitive exchange rates
+                                            No censorship
                                         </p>
                                     </dt>
                                     <dd className="mt-2 ml-16 text-base text-gray-500">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                        Maiores impedit perferendis suscipit eaque, iste dolor
-                                        cupiditate blanditiis ratione.
+                                        We are fully decentralized, so no one can tell you what you should do in your mashups
                                     </dd>
                                 </div>
 
@@ -174,13 +171,11 @@ export const MashHomeMain = () => {
                                             </svg>
                                         </div>
                                         <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                                            No hidden fees
+                                            Completely free
                                         </p>
                                     </dt>
                                     <dd className="mt-2 ml-16 text-base text-gray-500">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                        Maiores impedit perferendis suscipit eaque, iste dolor
-                                        cupiditate blanditiis ratione.
+                                        No premium subscription, no ads, all functionality available from the start
                                     </dd>
                                 </div>
 
@@ -216,13 +211,11 @@ export const MashHomeMain = () => {
                                             </svg>
                                         </div>
                                         <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                                            Transfers are instant
+                                            It's simple
                                         </p>
                                     </dt>
                                     <dd className="mt-2 ml-16 text-base text-gray-500">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                        Maiores impedit perferendis suscipit eaque, iste dolor
-                                        cupiditate blanditiis ratione.
+                                        MashApp doesn't have token and other attributes of decentralized projects. You don't need to learn extra stuff to get going
                                     </dd>
                                 </div>
 
@@ -258,13 +251,11 @@ export const MashHomeMain = () => {
                                             </svg>
                                         </div>
                                         <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
-                                            Mobile notifications
+                                            It's fun
                                         </p>
                                     </dt>
                                     <dd className="mt-2 ml-16 text-base text-gray-500">
-                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                        Maiores impedit perferendis suscipit eaque, iste dolor
-                                        cupiditate blanditiis ratione.
+                                        Explore trending list and fiddle with our simple editor. We hope you will like it!
                                     </dd>
                                 </div>
                             </dl>
