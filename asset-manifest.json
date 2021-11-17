@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/MashApp/static/css/main.f8aa6859.chunk.css",
-    "main.js": "/MashApp/static/js/main.98322433.chunk.js",
-    "main.js.map": "/MashApp/static/js/main.98322433.chunk.js.map",
+    "main.css": "/MashApp/static/css/main.279e70aa.chunk.css",
+    "main.js": "/MashApp/static/js/main.17182254.chunk.js",
+    "main.js.map": "/MashApp/static/js/main.17182254.chunk.js.map",
     "runtime-main.js": "/MashApp/static/js/runtime-main.c6b733d6.js",
     "runtime-main.js.map": "/MashApp/static/js/runtime-main.c6b733d6.js.map",
     "static/js/2.2eaeeb81.chunk.js": "/MashApp/static/js/2.2eaeeb81.chunk.js",
@@ -12,7 +12,7 @@
     "static/js/4.62da9f12.chunk.js": "/MashApp/static/js/4.62da9f12.chunk.js",
     "static/js/4.62da9f12.chunk.js.map": "/MashApp/static/js/4.62da9f12.chunk.js.map",
     "index.html": "/MashApp/index.html",
-    "static/css/main.f8aa6859.chunk.css.map": "/MashApp/static/css/main.f8aa6859.chunk.css.map",
+    "static/css/main.279e70aa.chunk.css.map": "/MashApp/static/css/main.279e70aa.chunk.css.map",
     "static/js/2.2eaeeb81.chunk.js.LICENSE.txt": "/MashApp/static/js/2.2eaeeb81.chunk.js.LICENSE.txt",
     "static/js/3.1cbabae9.chunk.js.LICENSE.txt": "/MashApp/static/js/3.1cbabae9.chunk.js.LICENSE.txt",
     "static/media/click.c181e88a.wav": "/MashApp/static/media/click.c181e88a.wav"
@@ -20,7 +20,7 @@
   "entrypoints": [
     "static/js/runtime-main.c6b733d6.js",
     "static/js/2.2eaeeb81.chunk.js",
-    "static/css/main.f8aa6859.chunk.css",
-    "static/js/main.98322433.chunk.js"
+    "static/css/main.279e70aa.chunk.css",
+    "static/js/main.17182254.chunk.js"
   ]
 }
