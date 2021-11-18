@@ -46,7 +46,7 @@ ReactDOM.render(
       serverUrl={process.env.REACT_APP_MORALIS_SERVER_URL ?? ''}
     >
       <CeramicProvider
-        network={Networks.TESTNET_CLAY}
+        network={Networks.MAINNET}
         connect={connect}
       >
         <App />

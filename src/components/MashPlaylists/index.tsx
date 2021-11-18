@@ -6,6 +6,7 @@ import { classNames } from "../../utils/classNames";
 import { durationTimeFormat } from "../../utils/durationTImeFormat";
 import { ITrack } from "../../types";
 import { useAudioEffects } from "../../hooks/useAudioEffects";
+import logo2 from '../../assets/logo2.png'
 
 interface IMashPlaylists {
   trendingTracks: any[];
@@ -71,7 +72,7 @@ function MashPlaylists({
                   )}
                 >
                   <img
-                    src={track.artwork?.["150x150"]}
+                    src={track.artwork?.["150x150"] ?? logo2}
                     loading="lazy"
                     className="w-12 h-12 mr-4 rounded"
                     alt=""
