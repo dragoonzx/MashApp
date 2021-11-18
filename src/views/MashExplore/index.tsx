@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, SyntheticEvent } from "react";
+import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom";
 // import * as Tone from "tone";
 // @ts-expect-error: no typing
 import Wave from "@foobar404/wave";
@@ -8,6 +10,11 @@ import { useAudius } from "../../hooks/useAudius";
 import { ITrack } from "../../types";
 import MashupsList from "../../components/MashupsList";
 import MashPlaylists from "../../components/MashPlaylists";
+import { state, useSnapshot } from "../../state";
+import MashDialog from "../../components/MashDialog";
+import { useMoralisQuery } from "react-moralis";
+import { getIPFSUrl } from "../../utils/getIPFS";
+import MashLoader from "../../components/MashLoader";
 
 const MashAbout = () => {
   useEffect(() => {
@@ -15,9 +22,35 @@ const MashAbout = () => {
 
     return () => {
       // @ts-ignore
+      if (!window.$wave?.audio?.source) {
+        return
+      }
+
+      // @ts-ignore
       window.$wave.audio.source = null
     }
   }, []);
+
+  const { data, error, isLoading } = useMoralisQuery("Mashups");
+  const [mashupTracks, setMashupTracks] = useState<any[]>([])
+
+  useEffect(() => {
+    if (!data.length) {
+      return
+    }
+    console.log(data)
+    const mashups = data.map(v => ({
+      id: v.get('mashup')?.mashupHash,
+      userId: v.get('user')?.id,
+      userName: v.get('user')?.name,
+      mashup: `${getIPFSUrl(v.get('mashup')?.mashupHash)}`,
+      title: v.get('mashup')?.title
+    }))
+    console.log(mashups)
+    setMashupTracks(mashups)
+  }, [data])
+
+  const [loading, setLoading] = useState(true)
 
   const [playing, setPlaying] = useState(false);
 
@@ -50,22 +83,29 @@ const MashAbout = () => {
       title: track.title,
       genre: track.genre,
     });
+    setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trendingTracks]);
-
-  // const [player, setPlayer] = useState(new Tone.Player());
 
   const setTrackToPlay = async (trackId: string, e?: SyntheticEvent) => {
     e?.preventDefault();
 
-    const track = trendingTracks.find((track) => track.id === trackId);
-    const stream = getTrackSrc(trackId);
+    let track = trendingTracks.find((track) => track.id === trackId);
+
+    let stream = ''
+  
+    if (!track) {
+      track = mashupTracks.find(track => track.id === trackId)
+      stream = track.mashup
+    } else {
+      stream = getTrackSrc(trackId);
+    }
 
     setCurrentTrack({
       id: trackId,
-      artwork: track.artwork?.["480x480"],
-      title: track.title,
-      genre: track.genre,
+      artwork: track?.artwork?.["480x480"],
+      title: track?.title,
+      genre: track?.genre,
     });
 
     if (!audioRef.current) {
@@ -105,15 +145,50 @@ const MashAbout = () => {
 
   const trackStatus = playing ? "playing" : "pause";
 
-  const [mashupMode, setMashupMode] = useState(false)
+  let [isOpen, setIsOpen] = useState(false)
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
+
+  const snap = useSnapshot(state)
+  const navigate = useNavigate();
 
   const toggleMashupMode = (curTrackId: string) => {
-    console.log(curTrackId)
-    setMashupMode(true)
+    if (!currentTrack) {
+      return
+    }
+
+    if (!state.currentUser) {
+      openModal()
+      return
+    }
+
+    state.currentTrack = { ...currentTrack }
+    state.mashupMode = true
+
+    setTimeout(() => {
+      navigate('/edit');
+    }, 800)
+  }
+
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  }
+
+  const trackVariants = {
+    center: { scale: 1 },
+    top: { x: '-160%', y: '-66%', scale: 0.2 }
   }
 
   return (
     <>
+      {loading && <MashLoader />}
       <div className="bg-indigo-800 min-h-screen text-white">
         <canvas
           id="output"
@@ -127,49 +202,83 @@ const MashAbout = () => {
           height="500"
           width="2040"
         ></canvas>
-        <div className="absolute top-0 min-h-screen min-w-full bg-black bg-opacity-25"></div>
+        <div className="absolute bg-pattern top-0 min-h-screen min-w-full bg-black bg-opacity-25"></div>
         {/* Left: mashups list */}
-        <MashupsList
-          trendingTracks={trendingTracks}
-          currentTrack={currentTrack}
-          setTrackToPlay={setTrackToPlay}
-        />
-        {/* Center: track & actions */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <MashExploreTrack
+        <motion.div
+          initial="hidden"
+          animate={(snap.mashupMode || loading) ? 'hidden' : 'visible'}
+          variants={variants}
+        >
+          <MashupsList
+            trendingTracks={trendingTracks}
+            mashupTracks={mashupTracks}
             currentTrack={currentTrack}
-            onTrackPlay={onTrackPlay}
-            onTrackPause={onTrackPause}
-            toggleMashupMode={toggleMashupMode}
-            trackState={trackStatus}
+            setTrackToPlay={setTrackToPlay}
           />
-          <button
-            onClick={nextTrackPlay}
-            className="flex justify-center mx-auto mt-4"
+        </motion.div>
+        {/* Center: track & actions */}
+        <motion.div
+          className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          initial="hidden"
+          animate={loading ? 'hidden' : 'visible'}
+          variants={variants}
+        >
+          <motion.div
+            initial="center"
+            animate={snap.mashupMode ? 'top' : 'center'}
+            variants={trackVariants}
           >
-            Next track
-          </button>
-          <audio
-            id="audio"
-            ref={audioRef}
-            controls
-            className="mt-4"
-          ></audio>
-        </div>
+            <MashExploreTrack
+              currentTrack={currentTrack}
+              onTrackPlay={onTrackPlay}
+              onTrackPause={onTrackPause}
+              toggleMashupMode={toggleMashupMode}
+              trackState={trackStatus}
+            />
+            <MashDialog
+              title="You need to sign in"
+              description="In order to edit or upload new tracks you need to sign in"
+              isOpen={isOpen}
+              closeModal={closeModal}
+            />
+          </motion.div>
+          <motion.div
+            initial="visible"
+            animate={snap.mashupMode ? 'hidden' : 'visible'}
+            variants={variants}
+          >
+            <button
+              onClick={nextTrackPlay}
+              className="flex justify-center mx-auto mt-4"
+            >
+              Next track
+            </button>
+            <audio
+              id="audio"
+              ref={audioRef}
+              controls
+              className="mt-4"
+            ></audio>
+          </motion.div>
+        </motion.div>
         {/* Right: profile connect & track edit mode */}
         <div className="absolute right-8 top-8 left-auto">
           <div className="flex items-center">
-            {mashupMode && <div className="mr-4">MASHUP MODE ON</div>}
             <SignInWithCeramic />
           </div>
         </div>
-        <div className="absolute right-8 top-24">
+        <motion.div
+          className="absolute right-8 top-24"
+          initial="hidden"
+          animate={(snap.mashupMode || loading) ? 'hidden' : 'visible'}
+          variants={variants}
+        >
           <MashPlaylists
             trendingTracks={trendingTracks}
             currentTrack={currentTrack}
             setTrackToPlay={setTrackToPlay}
           />
-        </div>
+        </motion.div>
       </div>
     </>
   );

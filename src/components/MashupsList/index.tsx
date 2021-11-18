@@ -6,15 +6,18 @@ import { classNames } from "../../utils/classNames";
 import { durationTimeFormat } from "../../utils/durationTImeFormat";
 import { ITrack } from "../../types";
 import { useAudioEffects } from "../../hooks/useAudioEffects";
+import logo2 from '../../assets/logo2.png'
 
 interface IMashupsList {
   trendingTracks: any[];
+  mashupTracks: any[];
   currentTrack: ITrack | null;
   setTrackToPlay: (id: string, e?: SyntheticEvent) => void;
 }
 
 function MashupsList({
   trendingTracks,
+  mashupTracks,
   currentTrack,
   setTrackToPlay
 }: IMashupsList) {
@@ -32,6 +35,11 @@ function MashupsList({
     setCategories({ ...categories, Trending: trendingTracks });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trendingTracks]);
+
+  useEffect(() => {
+    setCategories({ ...categories, Mashups: mashupTracks })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mashupTracks])
 
   return (
     <Tab.Group onChange={() => playClick()}>
@@ -76,7 +84,7 @@ function MashupsList({
                   )}
                 >
                   <img
-                    src={track.artwork?.["150x150"]}
+                    src={track.artwork?.["150x150"] ?? logo2}
                     loading="lazy"
                     className="w-12 h-12 mr-4 rounded"
                     alt=""
@@ -87,14 +95,14 @@ function MashupsList({
                     </h3>
 
                     <ul className="flex mt-1 space-x-1 text-xs font-normal leading-4">
-                      <li>{durationTimeFormat(track.duration)}</li>
+                      {track.duration && <li>{durationTimeFormat(track.duration)}</li>}
                       {track.mood ? (
                         <>
                           <li>&middot;</li>
                           <li>{track.mood}</li>
                         </>
                       ) : null}
-                      <li>&middot;</li>
+                      {track.duration && <li>&middot;</li>}
                       <li>{track.shareCount} shares</li>
                     </ul>
                   </div>

@@ -19,11 +19,17 @@ function MashExploreTrack({
   const isPlaying = trackState === "playing";
 
   return (
-    <div className="bg-white shadow-lg rounded p-3">
+    <div
+      className="bg-white shadow-lg rounded p-3"
+    >
       <div className="group relative">
         <img
           className="w-full md:w-72 block rounded mx-auto"
-          src={!currentTrack ? 'https://upload.wikimedia.org/wikipedia/en/f/f1/Tycho_-_Epoch.jpg' : currentTrack.artwork}
+          src={
+            !currentTrack
+              ? ""
+              : currentTrack.artwork
+          }
           alt=""
         />
         <div className="absolute bg-black rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center group-hover:opacity-100 transition justify-evenly">
@@ -72,16 +78,34 @@ function MashExploreTrack({
             )}
           </button>
 
-          <button onClick={() => toggleMashupMode(currentTrack?.id ?? '')} className="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          <button
+            onClick={() => toggleMashupMode(currentTrack?.id ?? "")}
+            className="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
             </svg>
           </button>
         </div>
       </div>
-      <div className="p-5" style={{maxWidth: '280px'}}>
-        <h3 className="text-black text-lg truncate">{!currentTrack ? 'Epoch' : currentTrack.title}</h3>
-        <p className="text-gray-600">{!currentTrack ? 'Tycho' : currentTrack.genre}</p>
+      <div className="p-5" style={{ maxWidth: "280px" }}>
+        <h3 className="text-black text-lg truncate">
+          {!currentTrack ? "Epoch" : currentTrack.title}
+        </h3>
+        <p className="text-gray-600">
+          {!currentTrack ? "Tycho" : currentTrack.genre}
+        </p>
       </div>
     </div>
   );

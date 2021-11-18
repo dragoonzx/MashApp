@@ -2,6 +2,9 @@ import { useCeramic } from "use-ceramic";
 import { useEffect, useState } from "react";
 import MashProfileMenu from "../MashProfileMenu";
 import { useAudioEffects } from "../../hooks/useAudioEffects";
+import { state, useSnapshot } from '../../state'
+import { IUser } from "../../types";
+import { getIPFSUrl } from "../../utils/getIPFS";
 
 // function UsernameIDX() {
 //   const ceramic = useCeramic();
@@ -54,6 +57,30 @@ function SignInWithCeramic() {
     setProgress(true);
     try {
       await ceramic.authenticate();
+      const profile: IUser | null = await ceramic.idx.get('basicProfile')
+
+      let image = undefined
+      if (profile?.image) {
+        const ipfsHash = (profile.image.alternatives[0].src.split('ipfs://'))[1]
+        image = {
+          alternatives: [
+            {
+              src: getIPFSUrl(ipfsHash)
+            }
+          ]
+        }
+      }
+
+      if (profile) {
+        state.currentUser = {
+          id: ceramic.did.id,
+          name: profile.name,
+          emoji: profile.emoji,
+          description: profile.description,
+          homeLocation: profile.homeLocation,
+          image
+        }
+      }
     } catch (e) {
       console.error(e);
     } finally {
@@ -66,7 +93,7 @@ function SignInWithCeramic() {
       return (
         <>
           <button
-            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none"
+            className="inline-flex items-center justify-center px-5 py-3 text-base font-medium leading-6 text-white transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded hover:bg-indigo-500 focus:outline-none"
             disabled={true}
           >
             Connecting...
