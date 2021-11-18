@@ -1,26 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import mainPicture from '../../../src/assets/mainImage.png'
 
 export const MashHomeMain = () => {
     return (
         <div>
+        
             <div>
 
                 {/* <img className="mx-auto mt-8" src="img/2865070.svg" /> */}
 
                 <div className="py-12 bg-white">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="lg:text-center">
-                            <h2
-                                className="
-                text-base text-indigo-600
-                font-semibold
-                tracking-wide
-                uppercase
-              "
-                            >
-                                Explore Music
-                            </h2>
+                        <div className="lg:text-center flex flex-col items-center">
+                            <img src={mainPicture} height="400" width="400" ></img>
                             <p
                                 className="
                 mt-2
