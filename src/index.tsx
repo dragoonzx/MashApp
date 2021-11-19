@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ToastContainer } from 'react-toastify';
 
 import { MoralisProvider } from "react-moralis";
 
@@ -50,6 +53,7 @@ ReactDOM.render(
         connect={connect}
       >
         <App />
+        <ToastContainer />
       </CeramicProvider>
     </MoralisProvider>
   </React.StrictMode>,

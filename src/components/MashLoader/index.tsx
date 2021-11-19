@@ -4,18 +4,22 @@ import logo2 from '../../assets/logo2.png'
 
 function MashLoader() {
   return (
-    <motion.div
-      className="absolute top-4 left-8 z-30"
-      initial={{ scale: 1.0, opacity: 0.75 }}
-      animate={{ scale: 0.9, opacity: 1 }}
-      transition={{
-        yoyo: Infinity,
-        duration: 0.5,
-        ease: "easeIn",
-      }}
+    <div
+      className="absolute min-w-full min-h-full flex items-center justify-center z-30 bg-opacity-60	bg-black"
     >
-      <img src={logo2} className="h-24" alt="" />
-    </motion.div>
+      <motion.img
+        src={logo2}
+        className="relative top-1/2 transform -translate-y-1/2 z-30 h-24"
+        alt=""
+        initial={{ scale: 1.0, opacity: 0.8 }}
+        animate={{ scale: 0.9, opacity: 1 }}
+        transition={{
+          yoyo: Infinity,
+          duration: 0.5,
+          ease: "easeIn",
+        }}
+      />
+    </div>
   )
 }
 
