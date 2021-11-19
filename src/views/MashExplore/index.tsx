@@ -13,8 +13,9 @@ import MashPlaylists from "../../components/MashPlaylists";
 import { state, useSnapshot } from "../../state";
 import MashDialog from "../../components/MashDialog";
 import { useMoralisQuery } from "react-moralis";
-import { getIPFSUrl } from "../../utils/getIPFS";
+import { getIPFSMashup } from "../../utils/getIPFS";
 import MashLoader from "../../components/MashLoader";
+import { notifySuccess } from "../../utils/toaster";
 
 const MashAbout = () => {
   useEffect(() => {
@@ -43,7 +44,7 @@ const MashAbout = () => {
       id: v.get('mashup')?.mashupHash,
       userId: v.get('user')?.id,
       userName: v.get('user')?.name,
-      mashup: `${getIPFSUrl(v.get('mashup')?.mashupHash)}`,
+      mashup: `${getIPFSMashup(v.get('mashup')?.mashupHash)}`,
       title: v.get('mashup')?.title
     }))
     console.log(mashups)
