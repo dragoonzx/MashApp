@@ -3,6 +3,7 @@ export interface ITrack {
   artwork: string;
   title: string;
   genre: string;
+  stream?: string;
 }
 
 export interface IUser {
