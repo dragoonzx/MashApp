@@ -74,15 +74,27 @@ const MashAbout = () => {
       return;
     }
 
-    const track = trendingTracks.find(
+    let track = trendingTracks.find(
       (track) => track.id === trendingTracks[0]?.id
     );
 
+    const trackId = track.id
+
+    let stream = ''
+  
+    if (!track) {
+      track = mashupTracks.find(track => track.id === trackId)
+      stream = track.mashup
+    } else {
+      stream = getTrackSrc(trackId);
+    }
+    console.log(stream)
     setCurrentTrack({
       id: track.id,
       artwork: track.artwork?.["480x480"],
       title: track.title,
       genre: track.genre,
+      stream
     });
     setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,6 +119,7 @@ const MashAbout = () => {
       artwork: track?.artwork?.["480x480"],
       title: track?.title,
       genre: track?.genre,
+      stream
     });
 
     if (!audioRef.current) {
@@ -252,7 +265,10 @@ const MashAbout = () => {
               onClick={nextTrackPlay}
               className="flex justify-center mx-auto mt-4"
             >
-              Next track
+              Next
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+              </svg>
             </button>
             <audio
               id="audio"
