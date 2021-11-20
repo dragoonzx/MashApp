@@ -13,9 +13,9 @@ import MashPlaylists from "../../components/MashPlaylists";
 import { state, useSnapshot } from "../../state";
 import MashDialog from "../../components/MashDialog";
 import { useMoralisQuery } from "react-moralis";
-import { getIPFSMashup } from "../../utils/getIPFS";
+import { getIPFSUrl } from "../../utils/getIPFS";
 import MashLoader from "../../components/MashLoader";
-import { notifySuccess } from "../../utils/toaster";
+import { useMoralisFile, useNewMoralisObject } from 'react-moralis';
 
 const MashAbout = () => {
   useEffect(() => {
@@ -44,7 +44,7 @@ const MashAbout = () => {
       id: v.get('mashup')?.mashupHash,
       userId: v.get('user')?.id,
       userName: v.get('user')?.name,
-      mashup: `${getIPFSMashup(v.get('mashup')?.mashupHash)}`,
+      mashup: `${getIPFSUrl(v.get('mashup')?.mashupHash)}`,
       title: v.get('mashup')?.title
     }))
     console.log(mashups)
@@ -60,6 +60,9 @@ const MashAbout = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [trendingTracks, setTrendingTracks] = useState<any[]>([]);
+
+  const [playlistTracks, setPlaylistTracks] = useState<any[]>([]);
+
 
   useEffect(() => {
     if (!host) {
@@ -157,6 +160,47 @@ const MashAbout = () => {
     audioRef.current?.pause()
   };
 
+  const snap = useSnapshot(state)
+
+  const { isSaving, save } = useNewMoralisObject('FavouriteTracks');
+  const favQuery = useMoralisQuery("FavouriteTracks");
+
+  const onAddToFavourites = async () => {
+
+    if(state?.currentUser == null || currentTrack == null){
+      console.log("Cannot save, you are not logged in")
+      return;
+    }
+    
+    // const currentTracks: string[] = favQuery?.data.map((v) => v.get("tracks")) ?? {};
+    const currentTracks: string[] = JSON.parse(localStorage.getItem('favTracks')??"[]") ?? {};
+    const currentTrackId: string = currentTrack.id;
+
+    const index = currentTracks.indexOf(currentTrackId);
+    if(index == -1){
+      console.log(`Push "${currentTrackId}" to fav tracks`)
+      currentTracks.push(currentTrackId)
+    }
+    else{
+      console.log(`Removing "${currentTrackId}" from fav tracks`);
+      currentTracks.splice(index, 1)
+    }
+
+    console.log(`saving fav tracks (${currentTracks.length}): ` + JSON.stringify(currentTracks));
+    
+    localStorage.setItem('favTracks', JSON.stringify(currentTracks))
+    
+    const tracks = await Promise.all(currentTracks.map(async x => await fetch(getTrackSrc(x))));
+    setPlaylistTracks(tracks);
+    // await save({
+    //   user: {
+    //     id: state.currentUser.id,
+    //     name: state.currentUser.name,
+    //   },
+    //   tracks: currentTracks.slice(0, 3),
+    // });
+  };
+
   const trackStatus = playing ? "playing" : "pause";
 
   let [isOpen, setIsOpen] = useState(false)
@@ -169,7 +213,7 @@ const MashAbout = () => {
     setIsOpen(true)
   }
 
-  const snap = useSnapshot(state)
+
   const navigate = useNavigate();
 
   const toggleMashupMode = (curTrackId: string) => {
@@ -246,6 +290,7 @@ const MashAbout = () => {
               currentTrack={currentTrack}
               onTrackPlay={onTrackPlay}
               onTrackPause={onTrackPause}
+              onAddToFavourites={onAddToFavourites}
               toggleMashupMode={toggleMashupMode}
               trackState={trackStatus}
             />
@@ -291,7 +336,7 @@ const MashAbout = () => {
           variants={variants}
         >
           <MashPlaylists
-            trendingTracks={trendingTracks}
+            playlistTracks={playlistTracks}
             currentTrack={currentTrack}
             setTrackToPlay={setTrackToPlay}
           />

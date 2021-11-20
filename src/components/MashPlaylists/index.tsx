@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/anchor-has-content */
-import { useState, SyntheticEvent } from "react";
+import { useState, useEffect, SyntheticEvent } from "react";
 import { Tab } from "@headlessui/react";
 import { classNames } from "../../utils/classNames";
 import { durationTimeFormat } from "../../utils/durationTImeFormat";
@@ -9,25 +9,30 @@ import { useAudioEffects } from "../../hooks/useAudioEffects";
 import logo2 from '../../assets/logo2.png'
 
 interface IMashPlaylists {
-  trendingTracks: any[];
+  playlistTracks: any[];
   currentTrack: ITrack | null;
   setTrackToPlay: (id: string, e?: SyntheticEvent) => void;
 }
 
 function MashPlaylists({
-  trendingTracks,
+  playlistTracks,
   currentTrack,
   setTrackToPlay
 }: IMashPlaylists) {
   const { playClick } = useAudioEffects()
 
-  const [categories] = useState<{
+  const [categories, setCategories] = useState<{
     Playlist: any[];
     Friends: any[];
   }>({
     Playlist: [],
     Friends: [],
   });
+
+  useEffect(() => {
+    setCategories({ ...categories, Playlist: playlistTracks });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [playlistTracks]);
 
   return (
     <Tab.Group onChange={() => playClick()}>
