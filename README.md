@@ -2,6 +2,8 @@
 
 # MashApp
 
+Listen, change, share music in one App, where no one will restrict you. MashApp enables Unstoppable creativity in music. Our app let you not only listen, but change any audio that you like, upload it in decentralized network where others can listen to it and change it as well!
+
 ![Alt text](./src/assets/logo1.png?raw=true "Title")
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
