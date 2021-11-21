@@ -66,6 +66,7 @@ function MashPlaylists({
           >
             {/* {idx === 0 ? <MashMashupsList /> : <div>kek</div>} */}
             <ul>
+              {!posts.length && (<div className="text-black text-center">You need to Sign In</div>)}
               {posts.map((track) => (
                 <li
                   key={track.id}

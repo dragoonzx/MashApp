@@ -61,7 +61,6 @@ const MashAbout = () => {
 
   const [trendingTracks, setTrendingTracks] = useState<any[]>([]);
 
-  const [playlistTracks, setPlaylistTracks] = useState<any[]>([]);
 
 
   useEffect(() => {
@@ -165,40 +164,31 @@ const MashAbout = () => {
   const { isSaving, save } = useNewMoralisObject('FavouriteTracks');
   const favQuery = useMoralisQuery("FavouriteTracks");
 
-  const onAddToFavourites = async () => {
+  const [playlistTracks, setPlaylistTracks] = useState<any[]>([]);
 
+  useEffect(() => {
+    const tracks = localStorage.getItem('favTracks')
+    if (tracks && state.currentUser?.id) {
+      setPlaylistTracks(JSON.parse(tracks))
+    }
+  }, [snap.currentUser])
+
+  const onAddToFavourites = (trackId: string) => {
     if(state?.currentUser == null || currentTrack == null){
       console.log("Cannot save, you are not logged in")
       return;
     }
     
-    // const currentTracks: string[] = favQuery?.data.map((v) => v.get("tracks")) ?? {};
-    const currentTracks: string[] = JSON.parse(localStorage.getItem('favTracks')??"[]") ?? {};
-    const currentTrackId: string = currentTrack.id;
+    let track = trendingTracks.find(track => track.id === trackId);
 
-    const index = currentTracks.indexOf(currentTrackId);
-    if(index == -1){
-      console.log(`Push "${currentTrackId}" to fav tracks`)
-      currentTracks.push(currentTrackId)
-    }
-    else{
-      console.log(`Removing "${currentTrackId}" from fav tracks`);
-      currentTracks.splice(index, 1)
+    if (!track) {
+      track = mashupTracks.find(track => track.id === trackId)
     }
 
-    console.log(`saving fav tracks (${currentTracks.length}): ` + JSON.stringify(currentTracks));
+    const tracks = [...playlistTracks, track]
     
-    localStorage.setItem('favTracks', JSON.stringify(currentTracks))
-    
-    const tracks = await Promise.all(currentTracks.map(async x => await fetch(getTrackSrc(x))));
     setPlaylistTracks(tracks);
-    // await save({
-    //   user: {
-    //     id: state.currentUser.id,
-    //     name: state.currentUser.name,
-    //   },
-    //   tracks: currentTracks.slice(0, 3),
-    // });
+    localStorage.setItem('favTracks', JSON.stringify(tracks))
   };
 
   const trackStatus = playing ? "playing" : "pause";
@@ -241,7 +231,7 @@ const MashAbout = () => {
 
   const trackVariants = {
     center: { scale: 1 },
-    top: { x: '-160%', y: '-66%', scale: 0.2 }
+    top: { x: '-200%', y: '-55%', scale: 0.2 }
   }
 
   return (
@@ -308,7 +298,7 @@ const MashAbout = () => {
           >
             <button
               onClick={nextTrackPlay}
-              className="flex justify-center mx-auto mt-4"
+              className="flex justify-center mx-auto mt-4 bg-white rounded text-black p-2"
             >
               Next
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
