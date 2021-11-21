@@ -96,7 +96,7 @@ function MashPlaylists({
                         </>
                       ) : null}
                       <li>&middot;</li>
-                      <li>{track.shareCount} shares</li>
+                      <li>{track.shareCount} mashup</li>
                     </ul>
                   </div>
 
