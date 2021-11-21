@@ -8,6 +8,8 @@ import SignInWithCeramic from "../../components/SignInWithCeramic";
 import { state, useSnapshot } from "../../state";
 import { notifyError, notifySuccess } from "../../utils/toaster";
 import { Switch } from '@headlessui/react'
+// @ts-ignore
+import WaveSurfer from 'wavesurfer.js'
 
 function MashEdit() {
   const snap = useSnapshot(state);
@@ -23,6 +25,30 @@ function MashEdit() {
       state.mashupMode = false;
     };
   }, []);
+
+  const [wavesurfer, setWavesurfer] = useState<any>(null)
+
+  useEffect(() => {
+    const waveSurfer = WaveSurfer.create({
+      container: "#waveform",
+      waveColor: 'violet',
+      progressColor: 'purple',
+      barGap: 2,
+      barRadius: 5,
+      barWidth: 9,
+      minPxPerSec: 3,
+    })
+    if (state.currentTrack?.stream) {
+      waveSurfer.load(state.currentTrack?.stream);
+    }
+    setWavesurfer(waveSurfer)
+  }, [])
+
+  const setWaveformContext = (context: any) => {
+    if (wavesurfer) {
+      wavesurfer.audioContext = context
+    }
+  }
 
   const [isUploadingState, setIsUploadingState] = useState(false);
 
@@ -75,12 +101,22 @@ function MashEdit() {
           <div className="flex flex-col ml-4">
             <p>{snap.currentTrack?.title}</p>
             <p>{snap.currentTrack?.genre}</p>
+            <div 
+              id="waveform"           
+              // className="absolute left-1/2 transform -translate-x-1/2"
+              style={{
+                width: '500px',
+                height: '200px',
+                bottom: 0,
+                minHeight: '200px',
+              }}
+            ></div>
           </div>
         </div>
         {/* Center: Filters & Upload new */}
-        <div className="pt-48 pr-8 pl-8">
+        <div className="pt-64 pr-8 pl-8">
           {!isUploadingState ? (
-            <MashFilters />
+            <MashFilters setWaveformContext={setWaveformContext} />
           ) : (
             <MashDropzone acceptedFilesChanged={acceptedFilesChanged} />
           )}

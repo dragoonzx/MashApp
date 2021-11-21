@@ -319,7 +319,7 @@ const MashAbout = () => {
               id="audio"
               ref={audioRef}
               controls
-              className="mt-4"
+              className="mt-4 invisible"
             ></audio>
           </motion.div>
         </motion.div>
